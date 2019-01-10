@@ -22,20 +22,26 @@ new Vue({
     },
     // Skicka poster
     sendPost() {
-        let newPost = {
-          name: this.posts.name,
-          text: this.posts.text
+      let name = this.posts.name;
+      let text = this.posts.text;
+
+      var xhr = new XMLHttpRequest();
+
+      xhr.open("POST", 'https://forum-vue-node.herokuapp.com/api/posts/add/', true);
+
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      xhr.onreadystatechange = function () { 
+
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+
+          console.log("Response: " + this.responseText);
         }
 
-        console.log(newPost);
-        axios.post('https://forum-vue-node.herokuapp.com/api/posts/add/', newPost)
-        .then((response) => {
-          console.log(response)
-          location.reload();
-        })
-        .catch((error) => {
-          console.log(error);
-        })
+      }
+      xhr.send("name=" + name + "&text= " + text);
+      location.reload();
+      
     }
   }
 })
