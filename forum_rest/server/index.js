@@ -51,7 +51,7 @@ app.get("/api/posts/:id", function (req, res) {
 
 // Uppdatera befintlig post
 app.put("/api/posts/:id", function(req, res){
-    Post.findOneAndUpdate({
+    Post.findByIdAndUpdate(req.params.id, {
         name: req.body.name,
         text: req.body.text,
     }).then(Post =>{
